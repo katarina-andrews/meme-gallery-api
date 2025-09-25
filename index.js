@@ -1,7 +1,6 @@
 import express from "express";
 
 const app = express();
-app.use(express.json());
 const PORT = 3000;
 
 let memes = [
@@ -13,6 +12,16 @@ let memes = [
   { id: 2, title: "Success Kid", url: "https://i.imgur.com/example2.jpg" },
 ];
 
+// middleware
+app.use(express.json());
+
+function logger(req, res, next) {
+  console.log(`${req.method} ${req.url} at ${new Date().toISOString()}`);
+  next();
+}
+app.use(logger);
+
+// routes
 app.get("/memes", (req, res) => {
   res.json(memes);
 });
@@ -34,6 +43,16 @@ app.post("/memes", async (req, res) => {
   const newMeme = { id: memes.length + 1, title, url };
   memes.push(newMeme);
   res.status(201).json(newMeme);
+});
+
+// error handling
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500). json({ error: "Something went wrong!" });
+});
+
+app.get("/error-test", (req, res) => {
+    throw new Error("Test error");
 });
 
 app.listen(PORT, () => {
