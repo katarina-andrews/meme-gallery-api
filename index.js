@@ -17,6 +17,15 @@ app.get("/memes", (req, res) => {
   res.json(memes);
 });
 
+app.get("/memes/:id", (req, res) => {
+  const { id } = req.params;
+  const meme = memes.find((m) => m.id === parseInt(id));
+  if (!meme) {
+    return res.status(404).json({ error: "Meme not found" });
+  }
+  res.json(meme);
+});
+
 app.post("/memes", async (req, res) => {
   const { title, url } = req.body;
   if (!title || !url) {
