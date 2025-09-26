@@ -45,14 +45,40 @@ app.post("/memes", async (req, res) => {
   res.status(201).json(newMeme);
 });
 
+app.put("/memes/:id", (req, res) => {
+  const { id } = req.params;
+  const { title, url } = req.body;
+  const meme = memes.find((m) => m.id === parseInt(id));
+
+  if (!meme) {
+    return res.status(404).json({ error: "Meme not found" });
+  }
+  meme.title = title || meme.title;
+  meme.url = url || meme.url;
+
+  res.json(meme);
+});
+
+app.delete("/memes/:id", (req, res) => {
+  const { id } = req.params;
+  const index = memes.findIndex((m) => m.id === parseInt(id));
+
+  if (index === -1) {
+    return res.status(404).json({ error: "Meme not found" });
+  }
+
+  const deleted = memes.splice(index, 1);
+  res.json(deleted[0]);
+});
+
 // error handling
 app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500). json({ error: "Something went wrong!" });
+  console.error(err.stack);
+  res.status(500).json({ error: "Something went wrong!" });
 });
 
 app.get("/error-test", (req, res) => {
-    throw new Error("Test error");
+  throw new Error("Test error");
 });
 
 app.listen(PORT, () => {
