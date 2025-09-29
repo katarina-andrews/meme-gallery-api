@@ -18,10 +18,6 @@ Setting up an Express server and creating API endpoints using ES6+ features.
 
 ![get by id error screenshot](screenshots/get-by-id-error.png)
 
-## Error test
-
-![error test screenshot](screenshots/error-test.png)
-
 ## Terminal log requests
 
 ![terminal log requests screenshot](screenshots/terminal-log-requests.png)
