@@ -29,3 +29,7 @@ Setting up an Express server and creating API endpoints using ES6+ features.
 ## DELETE meme
 
 ![delete screenshot](screenshots/delete-meme.png)
+
+## Queries 
+
+![queries screenshot](screenshots/queries.png)
