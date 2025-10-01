@@ -30,6 +30,10 @@ Setting up an Express server and creating API endpoints using ES6+ features.
 
 ![delete screenshot](screenshots/delete-meme.png)
 
-## Queries 
+## Queries for updating and deleting meme
 
 ![queries screenshot](screenshots/queries.png)
+
+## Queries for joining users and memes and returning all users
+
+![queries screenshot](screenshots/queries2.png)
