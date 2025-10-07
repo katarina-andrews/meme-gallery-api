@@ -22,6 +22,26 @@ export const getMemeById = async (req, res) => {
   res.json(meme);
 };
 
+export const getUserMeme = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const userWithMemes = await prisma.user.findUnique({
+      where: { id: parseInt(id) },
+      include: { memes: true }
+    });
+
+    if (!userWithMemes) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.json(userWithMemes.memes);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
 export const createMeme = async (req, res) => {
   const { title, url, userId } = req.body;
   if (!title || !url) {
