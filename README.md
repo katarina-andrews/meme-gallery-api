@@ -37,3 +37,23 @@ Setting up an Express server and creating API endpoints using ES6+ features.
 ## Queries for joining users and memes and returning all users
 
 ![queries screenshot](screenshots/queries2.png)
+
+## Returning a user’s memes
+
+![user memes screenshot](screenshots/user-memes.png)
+
+## Returning an invalid user’s memes
+
+![invalid user memes screenshot](screenshots/invalid-user-memes.png)
+
+## User registration
+
+![user registration screenshot](screenshots/register-user.png)
+
+## User login with returned token
+
+![user login screenshot](screenshots/login-user.png)
+
+## Successful meme creation with JWT
+
+![meme creation jwt screenshot](screenshots/meme-creation-jwt.png)
