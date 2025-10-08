@@ -1,5 +1,6 @@
 import express from "express";
 import memeRoutes from "./routes/memeRoutes.js";
+import authRoutes from "./routes/authRoutes.js"
 const app = express();
 const PORT = 3000;
 
@@ -20,6 +21,9 @@ app.get("/", (req, res) => {
 
 // memes routes
 app.use("/memes", memeRoutes);
+
+// user routes
+app.use("/auth", authRoutes);
 
 // 404 error handler
 app.use((req, res, next) => {
