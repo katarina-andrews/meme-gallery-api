@@ -2,11 +2,12 @@ import express from "express";
 import {
   getMemes,
   getMemeById,
+  getUserMeme,
   createMeme,
   updateMeme,
+  userLikesMeme,
   deleteMeme,
 } from "../controllers/memeController.js";
-import { getUserMeme } from "../controllers/userController.js";
 import jwt from "jsonwebtoken";
 
 // router to hold all memes routes
@@ -36,6 +37,9 @@ router.get("/users/:id/memes", getUserMeme);
 
 // route to add a meme
 router.post("/", authenticateToken, createMeme);
+
+// route to like meme
+router.post("/:id/like", authenticateToken, userLikesMeme)
 
 // route to update a meme by id
 router.put("/:id", updateMeme);
