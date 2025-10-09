@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import Joi from "joi"; 
+import { memeSchema } from "../validation.js";
 
 const likeSchema = Joi.object({
   userId: Joi.number().required(),
@@ -49,9 +50,8 @@ export const getUserMeme = async (req, res) => {
 
 export const createMeme = async (req, res) => {
   const { title, url } = req.body;
-  if (!title || !url) {
-    return res.status(400).json({ error: "title and url are required" });
-  }
+  const { error } = memeSchema.validate(req.body);
+  if (error) return res.status(400).json({ error: error.details[0].message });
 
   const newMeme = await prisma.meme.create({
     data: { title, url, userId: req.user.userId },

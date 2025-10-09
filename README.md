@@ -66,6 +66,18 @@ Setting up an Express server and creating API endpoints using ES6+ features.
 
 ![user unlike meme screenshot](screenshots/user-unlike-meme.png)
 
-## Like/unlike validation error
+## CREATE meme validation error
 
-![like/unlike validation error screenshot](screenshots/like-unlike-validation-error.png)
+![create meme validation error screenshot](screenshots/validation-error-meme.png)
+
+## CREATE meme validation success
+
+![create meme validation success screenshot](screenshots/validation-success-meme.png)
+
+## User registration error
+
+![user registration error screenshot](screenshots/validation-error-short-password.png)
+
+## User registration success
+
+![user registration success screenshot](screenshots/validation-success-user.png)

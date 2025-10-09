@@ -1,11 +1,14 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { userSchema } from "../validation.js";
 
 const prisma = new PrismaClient();
 
 export const createUserReg = async (req, res) => {
   const { username, password } = req.body;
+  const { error } = userSchema.validate(req.body);
+  if (error) return res.status(400).json({ error: error.details[0].message });
   const hashedPassword = await bcrypt.hash(password, 10);
 
   try {
