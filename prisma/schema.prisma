@@ -14,16 +14,28 @@ datasource db {
 }
 
 model User {
-  id     Int     @id @default(autoincrement())
-  username String @unique
-  password String
-  memes   Meme[]
+  id            Int             @id @default(autoincrement())
+  username      String          @unique
+  password      String
+  memes         Meme[]
+  UserLikesMeme UserLikesMeme[]
 }
 
 model Meme {
-  id     Int    @id @default(autoincrement())
-  title  String
-  url    String
-  user   User   @relation(fields: [userId], references: [id])
+  id            Int             @id @default(autoincrement())
+  title         String
+  url           String
+  user          User            @relation(fields: [userId], references: [id])
+  userId        Int
+  UserLikesMeme UserLikesMeme[]
+}
+
+model UserLikesMeme {
+  id     Int  @id @default(autoincrement())
+  user   User @relation(fields: [userId], references: [id])
+  meme   Meme @relation(fields: [memeId], references: [id])
   userId Int
+  memeId Int
+
+  @@unique([userId, memeId])
 }
