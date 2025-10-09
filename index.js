@@ -16,7 +16,7 @@ app.use(logger);
 
 // root route i.e homepage 
 app.get("/", (req, res) => {
-  response.send("Welcome to the Meme Gallery API");
+  res.send("Welcome to the Meme Gallery API");
 });
 
 // memes routes
