@@ -57,3 +57,15 @@ Setting up an Express server and creating API endpoints using ES6+ features.
 ## Successful meme creation with JWT
 
 ![meme creation jwt screenshot](screenshots/meme-creation-jwt.png)
+
+## User like meme
+
+![user like meme screenshot](screenshots/user-like-meme.png)
+
+## User unlike meme
+
+![user unlike meme screenshot](screenshots/user-unlike-meme.png)
+
+## Like/unlike validation error
+
+![like/unlike validation error screenshot](screenshots/like-unlike-validation-error.png)
