@@ -63,6 +63,8 @@ export const createMeme = async (req, res) => {
 export const updateMeme = async (req, res) => {
   const { id } = req.params;
   const { title, url } = req.body;
+  const { error } = memeSchema.validate(req.body);
+  if (error) return res.status(400).json({ error: error.details[0].message });
 
   const updateMeme = await prisma.meme.update({
     where: {

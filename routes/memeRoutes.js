@@ -42,9 +42,9 @@ router.post("/", authenticateToken, createMeme);
 router.post("/:id/like", authenticateToken, userLikesMeme)
 
 // route to update a meme by id
-router.put("/:id", updateMeme);
+router.put("/:id", authenticateToken, updateMeme);
 
 // route to delete a meme by id
-router.delete("/:id", deleteMeme);
+router.delete("/:id", authenticateToken, deleteMeme);
 
 export default router;
