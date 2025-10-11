@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import Joi from "joi"; 
+import Joi from "joi";
 import { memeSchema } from "../validation.js";
 
 const likeSchema = Joi.object({
@@ -66,6 +66,19 @@ export const updateMeme = async (req, res) => {
   const { error } = memeSchema.validate(req.body);
   if (error) return res.status(400).json({ error: error.details[0].message });
 
+  const meme = await prisma.meme.findUnique({
+    where: {
+      id: parseInt(id),
+    },
+  });
+
+  if (meme.userId !== req.user.userId) {
+    console.log(meme.userId, req.user.userId);
+    return res
+      .status(403)
+      .json({ error: "You can only update your own meme." });
+  }
+
   const updateMeme = await prisma.meme.update({
     where: {
       id: parseInt(id),
@@ -85,8 +98,8 @@ export const updateMeme = async (req, res) => {
 
 export const userLikesMeme = async (req, res) => {
   const { id } = req.params;
-  const { error } = likeSchema.validate({ userId: req.user.userId }); 
-  if (error) return res.status(400).json({ error: error.details[0].message }); 
+  const { error } = likeSchema.validate({ userId: req.user.userId });
+  if (error) return res.status(400).json({ error: error.details[0].message });
 
   try {
     const existing = await prisma.userLikesMeme.findUnique({
@@ -112,6 +125,19 @@ export const userLikesMeme = async (req, res) => {
 export const deleteMeme = async (req, res) => {
   const { id } = req.params;
 
+ const meme = await prisma.meme.findUnique({
+    where: {
+      id: parseInt(id),
+    },
+  });
+    
+  if (meme.userId !== req.user.userId) {
+    console.log(meme.userId, req.user.userId);
+    return res
+      .status(403)
+      .json({ error: "You can only delete your own meme." });
+  }
+
   const deleteMeme = await prisma.meme.delete({
     where: {
       id: parseInt(id),
@@ -120,5 +146,3 @@ export const deleteMeme = async (req, res) => {
 
   res.json(deleteMeme);
 };
-
-
