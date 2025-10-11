@@ -1,8 +1,12 @@
 import express from "express";
 import memeRoutes from "./routes/memeRoutes.js";
-import authRoutes from "./routes/authRoutes.js"
+import authRoutes from "./routes/authRoutes.js";
+import dotenv from "dotenv";
+
+dotenv.config();
+
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT;
 
 // middleware to parse JSON bodies
 app.use(express.json());
@@ -14,7 +18,7 @@ function logger(req, res, next) {
 }
 app.use(logger);
 
-// root route i.e homepage 
+// root route i.e homepage
 app.get("/", (req, res) => {
   res.send("Welcome to the Meme Gallery API");
 });
