@@ -73,7 +73,6 @@ export const updateMeme = async (req, res) => {
   });
 
   if (meme.userId !== req.user.userId) {
-    console.log(meme.userId, req.user.userId);
     return res
       .status(403)
       .json({ error: "You can only update your own meme." });
@@ -110,12 +109,16 @@ export const userLikesMeme = async (req, res) => {
 
     if (existing) {
       await prisma.userLikesMeme.delete({ where: { id: existing.id } });
-      return res.json({ message: "Meme unliked" });
+      return res.json({
+        message: "Meme unliked",
+      });
     } else {
       await prisma.userLikesMeme.create({
         data: { userId: req.user.userId, memeId: parseInt(id) },
       });
-      return res.json({ message: "Meme liked" });
+      return res.json({
+        message: "Meme liked",
+      });
     }
   } catch (err) {
     res.status(500).json({ error: "Server error" });
@@ -125,14 +128,13 @@ export const userLikesMeme = async (req, res) => {
 export const deleteMeme = async (req, res) => {
   const { id } = req.params;
 
- const meme = await prisma.meme.findUnique({
+  const meme = await prisma.meme.findUnique({
     where: {
       id: parseInt(id),
     },
   });
-    
+
   if (meme.userId !== req.user.userId) {
-    console.log(meme.userId, req.user.userId);
     return res
       .status(403)
       .json({ error: "You can only delete your own meme." });

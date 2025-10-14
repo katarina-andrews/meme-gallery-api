@@ -7,7 +7,7 @@ import {
   updateMeme,
   userLikesMeme,
   deleteMeme,
-} from "../controllers/memeController.js";
+} from "../controllers/memeControllers.js";
 import jwt from "jsonwebtoken";
 
 // router to hold all memes routes
