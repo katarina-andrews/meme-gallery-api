@@ -39,8 +39,8 @@ app.use((req, res, next) => {
 
 // general error handler
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ error: "Something went wrong!" });
+  console.error(err.stack, "Something went wrong!");
+  res.status(500).json({ error: err.name, message: err.message });
 });
 
 app.listen(PORT, () => {
