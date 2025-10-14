@@ -23,7 +23,7 @@ export const getMemeById = async (req, res) => {
   });
 
   if (!meme) {
-    return res.status(404).json({ error: "Meme not found" });
+    throw new Error("Meme not found");
   }
   res.json(meme);
 };
@@ -38,7 +38,7 @@ export const getUserMeme = async (req, res) => {
     });
 
     if (!userWithMemes) {
-      return res.status(404).json({ error: "User not found" });
+      throw new Error("User not found");
     }
 
     res.json(userWithMemes.memes);
@@ -51,7 +51,9 @@ export const getUserMeme = async (req, res) => {
 export const createMeme = async (req, res) => {
   const { title, url } = req.body;
   const { error } = memeSchema.validate(req.body);
-  if (error) return res.status(400).json({ error: error.details[0].message });
+  if (error) {
+    throw new Error(error.details[0].message)
+  };
 
   const newMeme = await prisma.meme.create({
     data: { title, url, userId: req.user.userId },
@@ -64,7 +66,9 @@ export const updateMeme = async (req, res) => {
   const { id } = req.params;
   const { title, url } = req.body;
   const { error } = memeSchema.validate(req.body);
-  if (error) return res.status(400).json({ error: error.details[0].message });
+  if (error) {
+    throw new Error(error.details[0].message)
+  };
 
   const meme = await prisma.meme.findUnique({
     where: {
@@ -73,9 +77,7 @@ export const updateMeme = async (req, res) => {
   });
 
   if (meme.userId !== req.user.userId) {
-    return res
-      .status(403)
-      .json({ error: "You can only update your own meme." });
+    throw new Error("You can only update your own meme.");
   }
 
   const updateMeme = await prisma.meme.update({
@@ -89,7 +91,7 @@ export const updateMeme = async (req, res) => {
   });
 
   if (!updateMeme) {
-    return res.status(404).json({ error: "Meme not found" });
+    throw new Error("Meme not found");
   }
 
   res.json(updateMeme);
@@ -98,7 +100,9 @@ export const updateMeme = async (req, res) => {
 export const userLikesMeme = async (req, res) => {
   const { id } = req.params;
   const { error } = likeSchema.validate({ userId: req.user.userId });
-  if (error) return res.status(400).json({ error: error.details[0].message });
+  if (error) {
+    throw new Error(error.details[0].message)
+  };
 
   try {
     const existing = await prisma.userLikesMeme.findUnique({
@@ -135,9 +139,7 @@ export const deleteMeme = async (req, res) => {
   });
 
   if (meme.userId !== req.user.userId) {
-    return res
-      .status(403)
-      .json({ error: "You can only delete your own meme." });
+   throw new Error("You can only delete your own meme.");
   }
 
   const deleteMeme = await prisma.meme.delete({
