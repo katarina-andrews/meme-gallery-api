@@ -4,4 +4,3 @@ Setting up an Express server and creating API endpoints using ES6+ features to b
 
 [Live Site](https://meme-gallery-api-4pmz.onrender.com/)
 
-*(will add more after frontend)*

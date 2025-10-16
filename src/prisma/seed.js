@@ -1,4 +1,4 @@
-import { seedData } from "../seedData.js";
+import { seedData } from "../src/seedData.js";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();

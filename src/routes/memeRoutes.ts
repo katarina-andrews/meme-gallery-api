@@ -1,4 +1,5 @@
 import express from "express";
+import type { Request, Response, NextFunction } from "express"
 import {
   getMemes,
   getMemeById,
@@ -10,17 +11,19 @@ import {
 } from "../controllers/memeControllers.js";
 import jwt from "jsonwebtoken";
 
+
 // router to hold all memes routes
 const router = express.Router();
 
 // middleware to authenticate user
-function authenticateToken(req, res, next) {
+function authenticateToken(req: Request, res: Response, next: NextFunction) {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
   if (!token) return res.sendStatus(401);
-
-  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+console.log(token)
+  jwt.verify(token, process.env.JWT_SECRET!, (err: any, decoded) => {
     if (err) return res.sendStatus(403);
+    // @ts-ignore
     req.user = decoded;
     next();
   });
