@@ -2,6 +2,13 @@ import express from "express";
 import memeRoutes from "./routes/memeRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import dotenv from "dotenv";
+import {
+  limiter,
+  logging,
+  notFoundError,
+  generalError,
+  checkApiKey,
+} from "./middleware/middleware.js";
 
 dotenv.config();
 
@@ -12,11 +19,13 @@ const PORT = process.env.PORT;
 app.use(express.json());
 
 // middleware for logging
-function logger(req, res, next) {
-  console.log(`${req.method} ${req.url} at ${new Date().toISOString()}`);
-  next();
-}
-app.use(logger);
+app.use(logging);
+
+// Apply the rate limiting middleware to all requests.
+app.use(limiter);
+
+// apply API key security to all routes
+app.use(checkApiKey);
 
 // root route i.e homepage
 app.get("/", (req, res) => {
@@ -30,18 +39,10 @@ app.use("/memes", memeRoutes);
 app.use("/auth", authRoutes);
 
 // 404 error handler
-app.use((req, res, next) => {
-  res.status(404).json({
-    error: "We could not find the url you are looking for",
-    message: `route ${req.originalUrl} not found`,
-  });
-});
+app.use(notFoundError);
 
 // general error handler
-app.use((err, req, res, next) => {
-  console.error(err.stack, "Something went wrong!");
-  res.status(500).json({ error: err.name, message: err.message });
-});
+app.use(generalError);
 
 app.listen(PORT, () => {
   console.log(`Dev Meme API listening on port http://localhost:${PORT}`);
