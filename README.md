@@ -4,8 +4,8 @@ A private CRUD API that allows users to register, log in, and manage memes — i
 
 **Author:** Katarina Andrews
 
-[Deployment URL](https://meme-gallery-api-4pmz.onrender.com/)
-[API Docs](https://meme-gallery-api-4pmz.onrender.com/docs)
+- **[Deployment URL](https://meme-gallery-api-4pmz.onrender.com/)**
+- **[API Docs](https://meme-gallery-api-4pmz.onrender.com/docs)**
 
 ## Project Overview
 
@@ -13,10 +13,7 @@ A private CRUD API that allows users to register, log in, and manage memes — i
 
 1. **Initialize Project**
 
-   - Installed Express
-     ```
-     npm install express
-     ```
+   - Installed Express `npm install express`
    - Added seed data for initial testing
    - Created routes meme operations
    - Implemented middleware for request logging and error handling
@@ -30,27 +27,25 @@ A private CRUD API that allows users to register, log in, and manage memes — i
      npm install @prisma/client
      npx prisma init
      ```
-   - Added the PostgreSQL connection URL to the `.env` file (DATABASE_URL=your_postgres_rds_connection_url) and Port (PORT=3000)
+   - Added the PostgreSQL connection URL and Port to the `.env` file 
+     ```
+     DATABASE_URL=your_postgres_rds_connection_url
+     PORT=3000
+     ```
    - Integrated Prisma into the project for database access and migrations
 
 3. **Implement Authentication**
 
-   - Installed authentication dependencies
-     ```
-     npm install bcrypt jsonwebtoken
-     ```
+   - Installed authentication dependencies `npm install bcrypt jsonwebtoken`
    - Implemented **JWT-based authentication**
    - Created user registration and login routes
    - Added authentication middleware to protect restricted routes
-   - Added JWT to `.env` file (JWT_SECRET=your_jwt_secret)
+   - Added JWT to `.env` file `JWT_SECRET=your_jwt_secret`
 
 4. **Extra Features**
 
    - Implemented the **“like/unlike meme”** feature
-   - Installed **Joi** for input validation
-     ```
-     npm install joi
-     ```
+   - Installed **Joi** for input validation `npm install joi`
 
 5. **TypeScript Integration**
 
@@ -59,6 +54,9 @@ A private CRUD API that allows users to register, log in, and manage memes — i
 
 6. **Deployment**
    - Deployed the backend API on **Render** for production hosting
+   - Added API key
+   - Added API docs `npm install express-jsdoc-swagger`
+
 
 
 ### How to run
