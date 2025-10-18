@@ -7,13 +7,27 @@ import {
   logging,
   notFoundError,
   generalError,
-  checkApiKey,
 } from "./middleware/middleware.js";
+import expressJSDocSwagger from "express-jsdoc-swagger";
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT;
+
+expressJSDocSwagger(app)({
+  info: {
+    version: "1.0.0",
+    title: "Meme Gallery API",
+    description: "Docs for Meme Gallery API",
+  },
+  security: { ApiKeyAuth: { type: "apiKey", in: "header", name: "x-api-key" } },
+  swaggerUIPath: "/docs",
+  baseDir: process.cwd(), // returns the current working directory
+  filesPattern: "./src/routes/**/*.{js,ts}",
+  exposeApiDocs: true,
+  apiDocsPath: "/api-docs.json",
+});
 
 // middleware to parse JSON bodies
 app.use(express.json());
@@ -23,9 +37,6 @@ app.use(logging);
 
 // Apply the rate limiting middleware to all requests.
 app.use(limiter);
-
-// apply API key security to all routes
-app.use(checkApiKey);
 
 // root route i.e homepage
 app.get("/", (req, res) => {

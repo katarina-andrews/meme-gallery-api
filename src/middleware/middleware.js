@@ -1,4 +1,5 @@
 import { rateLimit } from "express-rate-limit";
+import jwt from "jsonwebtoken";
 
 export const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
@@ -37,3 +38,17 @@ export const generalError = (err, req, res, next) => {
   console.error(err.stack, "Something went wrong!");
   res.status(500).json({ error: err.name, message: err.message });
 };
+
+// middleware to authenticate user
+export const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+  if (!token) return res.sendStatus(401);
+console.log(token)
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) return res.sendStatus(403);
+    // @ts-ignore
+    req.user = decoded;
+    next();
+  });
+}

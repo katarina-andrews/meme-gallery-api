@@ -5,6 +5,7 @@ A private CRUD API that allows users to register, log in, and manage memes — i
 **Author:** Katarina Andrews
 
 [Deployment URL](https://meme-gallery-api-4pmz.onrender.com/)
+[API Docs](https://meme-gallery-api-4pmz.onrender.com/docs)
 
 ## Project Overview
 
@@ -70,7 +71,7 @@ A private CRUD API that allows users to register, log in, and manage memes — i
 }
 ```
 
-## API Docs
+## Routes
 
 **Auth Routes**
 
@@ -149,3 +150,4 @@ POST `/memes/:id/like`
 - bcrypt
 - JWT
 - Joi
+- Swagger
