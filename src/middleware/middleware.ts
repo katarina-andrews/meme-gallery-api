@@ -1,5 +1,6 @@
 import { rateLimit } from "express-rate-limit";
 import jwt from "jsonwebtoken";
+import type { Request, Response, NextFunction } from "express";
 
 export const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
@@ -10,7 +11,7 @@ export const limiter = rateLimit({
   // store: ... , // Redis, Memcached, etc. See below.
 });
 
-export const checkApiKey = (req, res, next) => {
+export const checkApiKey = (req: Request, res: Response, next: NextFunction) => {
   const key = req.header("x-api-key");
 
   if (key && key === process.env.API_KEY) {
@@ -20,13 +21,13 @@ export const checkApiKey = (req, res, next) => {
   } 
 };
 
-export const logging = (req, res, next) => {
+export const logging = (req: Request, res: Response, next: NextFunction) => {
   console.log(`${req.method} ${req.url} at ${new Date().toISOString()}`);
   next();
 };
 
 // 404 error handler
-export const notFoundError = (req, res, next) => {
+export const notFoundError = (req: Request, res: Response) => {
   res.status(404).json({
     error: "We could not find the url you are looking for",
     message: `route ${req.originalUrl} not found`,
@@ -34,18 +35,18 @@ export const notFoundError = (req, res, next) => {
 };
 
 // general error handler
-export const generalError = (err, req, res, next) => {
+export const generalError = (err: any, req: Request, res: Response) => {
   console.error(err.stack, "Something went wrong!");
   res.status(500).json({ error: err.name, message: err.message });
 };
 
 // middleware to authenticate user
-export const authenticateToken = (req, res, next) => {
+export const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
   if (!token) return res.sendStatus(401);
 console.log(token)
-  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+  jwt.verify(token, process.env.JWT_SECRET!, (err, decoded) => {
     if (err) return res.sendStatus(403);
     // @ts-ignore
     req.user = decoded;
