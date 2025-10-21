@@ -9,6 +9,7 @@ import {
   generalError,
 } from "./middleware/middleware.js";
 import expressJSDocSwagger from "express-jsdoc-swagger";
+import cors from "cors"; 
 
 dotenv.config();
 
@@ -28,6 +29,8 @@ expressJSDocSwagger(app)({
   exposeApiDocs: true,
   apiDocsPath: "/api-docs.json",
 });
+
+app.use(cors())
 
 // middleware to parse JSON bodies
 app.use(express.json());
