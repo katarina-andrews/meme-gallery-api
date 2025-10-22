@@ -30,7 +30,12 @@ expressJSDocSwagger(app)({
   apiDocsPath: "/api-docs.json",
 });
 
-app.use(cors())
+let corsOptions = {
+  origin: process.env.CORS_ORIGIN,
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+
+app.use(cors(corsOptions))
 
 // middleware to parse JSON bodies
 app.use(express.json());
