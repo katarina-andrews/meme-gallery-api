@@ -30,8 +30,14 @@ expressJSDocSwagger(app)({
   apiDocsPath: "/api-docs.json",
 });
 
+
+//update this and edit env variables on render
 let corsOptions = {
-  origin: process.env.CORS_ORIGIN,
+  origin: [
+    "https://d8ltedkzvs2h3.cloudfront.net", // cloudfront
+    "http://meme-gallery17.s3-website.us-east-2.amazonaws.com", //s3 bucket
+    "http://localhost:5173", //local host
+  ],
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
