@@ -36,5 +36,5 @@ export const createUserLogin = async (req: Request, res: Response) => {
     expiresIn: "1h",
   });
 
-  res.json({ token });
+  res.json({ token, username, id: user.id });
 };
